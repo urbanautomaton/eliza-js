@@ -1,0 +1,19 @@
+{
+  "name": "eliza-js",
+  "version": "0.0.0",
+  "description": "ELIZA chat-bot reimplementation",
+  "main": "eliza.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/urbanautomaton/eliza-js.git"
+  },
+  "author": "Simon Coffey",
+  "license": "MIT",
+  "gitHead": "356906f2de524b004782d5c01398fe356022c225"
+}
