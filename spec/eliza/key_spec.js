@@ -17,23 +17,29 @@ describe("Key", function() { with(this) {
   })
 
   describe("match()", function() { with(this) {
-    it("calls match() on each decomp until one matches", function() { with(this) {
+    it("does nothing if its word does not match the phrase", function() { with(this) {
       key.match("hello", responder);
 
-      expect(decomp1.match).toHaveBeenCalledWith("hello", responder);
-      expect(decomp2.match).toHaveBeenCalledWith("hello", responder);
-      expect(decomp3.match).not.toHaveBeenCalledWith("hello", responder);
+      expect(decomp1.match).not.toHaveBeenCalled();
+    }})
+
+    it("calls match() on each decomp until one matches", function() { with(this) {
+      key.match("word blah", responder);
+
+      expect(decomp1.match).toHaveBeenCalledWith("word blah", responder);
+      expect(decomp2.match).toHaveBeenCalledWith("word blah", responder);
+      expect(decomp3.match).not.toHaveBeenCalledWith("word blah", responder);
     }})
 
     it("returns if no match is found", function() { with(this) {
       decomp2.match = function(p,r) { return false; };
       spyOn(this.decomp2, 'match').andCallThrough();
 
-      key.match("hello", responder);
+      key.match("word blah", responder);
 
-      expect(decomp1.match).toHaveBeenCalledWith("hello", responder);
-      expect(decomp2.match).toHaveBeenCalledWith("hello", responder);
-      expect(decomp3.match).toHaveBeenCalledWith("hello", responder);
+      expect(decomp1.match).toHaveBeenCalledWith("word blah", responder);
+      expect(decomp2.match).toHaveBeenCalledWith("word blah", responder);
+      expect(decomp3.match).toHaveBeenCalledWith("word blah", responder);
     }})
   }})
 

@@ -10,8 +10,8 @@ describe("Eliza", function() { with(this) {
     "synon":    { "desire": ["want", "need"] },
     "keys":     [
       {
-        "word": "xnone",
-        "weight": 1,
+        "word": "",
+        "weight": 0,
         "decomp": { "*": [ "Please go on" ] }
       },
       {
