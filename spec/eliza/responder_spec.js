@@ -1,24 +1,23 @@
 var Responder = require('../../lib/eliza/responder');
 
 describe("Responder", function() { with(this) {
+  var defaults = ["Welp"];
 
   beforeEach(function() {
     this.pre  = { };
     this.post = { };
 
-    this.responder = new Responder(this.pre, this.post);
-
     this.key1 = { match: function(p,r) {} };
     this.key2 = { match: function(p,r) { r.respondWith("hello"); } };
     this.key3 = { match: function(p,r) {} };
 
+    var keys = [this.key1, this.key2, this.key3];
+
+    this.responder = new Responder(this.pre, this.post, keys, defaults);
+
     spyOn(this.key1, "match").andCallThrough();
     spyOn(this.key2, "match").andCallThrough();
     spyOn(this.key3, "match").andCallThrough();
-
-    this.responder.addKey(this.key1);
-    this.responder.addKey(this.key2);
-    this.responder.addKey(this.key3);
   })
 
   describe(".respond()", function() { with(this) {
