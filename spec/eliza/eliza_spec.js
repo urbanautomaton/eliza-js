@@ -15,6 +15,16 @@ describe("Eliza", function() { with(this) {
         "decomp": { "*": [ "Don't apologise" ] }
       },
       {
+        "word": "i",
+        "weight": 1,
+        "decomp": {
+          "i @desire *": [
+            "What makes you want (2)?",
+            "Do you really (1) (2)?",
+          ]
+        }
+      },
+      {
         "word": "like",
         "weight": 2,
         "decomp": { "I don't like *": [
@@ -72,6 +82,19 @@ describe("Eliza", function() { with(this) {
 
       expect(client.say).toHaveBeenCalledWith("Why do you not like ham?");
       expect(client.say).toHaveBeenCalledWith("You are so negative about trout");
+    }})
+
+    it("recognises synonyms", function() { with(this) {
+      eliza.say("I need a loaf of bread");
+
+      expect(client.say).toHaveBeenCalledWith("What makes you want a loaf of bread?");
+    }})
+
+    it("substitutes synonyms as match blocks", function() { with(this) {
+      eliza.say("I need a loaf of bread");
+      eliza.say("I desire a bushel of lolcats");
+
+      expect(client.say).toHaveBeenCalledWith("Do you really desire a bushel of lolcats?");
     }})
 
     it("Uses a default phrase if no matches are found", function() { with(this) {
