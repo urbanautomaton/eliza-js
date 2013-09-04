@@ -10,11 +10,6 @@ describe("Eliza", function() { with(this) {
     "synon":    { "desire": ["want", "need"] },
     "keys":     [
       {
-        "word": "",
-        "weight": 0,
-        "decomp": { "*": [ "Please go on" ] }
-      },
-      {
         "word": "sorry",
         "weight": 1,
         "decomp": { "*": [ "Don't apologise" ] }
@@ -24,7 +19,8 @@ describe("Eliza", function() { with(this) {
         "weight": 2,
         "decomp": { "*": [ "I don't like names" ] }
       }
-    ]
+    ],
+    "defaults": [ "Please go on" ]
   };
 
   beforeEach(function() {
