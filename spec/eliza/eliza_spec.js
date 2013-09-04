@@ -15,6 +15,15 @@ describe("Eliza", function() { with(this) {
         "decomp": { "*": [ "Don't apologise" ] }
       },
       {
+        "word": "like",
+        "weight": 2,
+        "decomp": { "I don't like *": [
+          "Why do you not like (1)?",
+          "You are so negative about (1)"
+        ]
+        }
+      },
+      {
         "word": "name",
         "weight": 2,
         "decomp": { "*": [ "I don't like names" ] }
@@ -49,6 +58,20 @@ describe("Eliza", function() { with(this) {
       eliza.say("sorry, I didn't catch your name");
 
       expect(client.say).toHaveBeenCalledWith("I don't like names");
+    }})
+
+    it("substitutes matched patterns in responses", function() { with(this) {
+      eliza.say("I don't like ham");
+
+      expect(client.say).toHaveBeenCalledWith("Why do you not like ham?");
+    }})
+
+    it("cycles through matched phrases", function() { with(this) {
+      eliza.say("I don't like ham");
+      eliza.say("I don't like trout");
+
+      expect(client.say).toHaveBeenCalledWith("Why do you not like ham?");
+      expect(client.say).toHaveBeenCalledWith("You are so negative about trout");
     }})
 
     it("Uses a default phrase if no matches are found", function() { with(this) {
