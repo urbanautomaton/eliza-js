@@ -26,5 +26,13 @@ describe("Key", function() { with(this) {
     }})
   }})
 
+  describe("blindMatch()", function() { with(this) {
+    it("calls match on the first decomp even if the keyword does not match", function() { with(this) {
+      key.blindMatch("hello", responder);
+
+      expect(decomp.match).toHaveBeenCalledWith("hello", responder);
+    }})
+  }})
+
 }})
 

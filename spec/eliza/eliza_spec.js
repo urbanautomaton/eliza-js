@@ -15,12 +15,31 @@ describe("Eliza", function() { with(this) {
         "decomp": { "*": [ "Don't apologise" ] }
       },
       {
+        "word": "what",
+        "weight": 1,
+        "decomp": { "*": [ "Does that question interest you?" ] }
+      },
+      {
+        "word": "why",
+        "weight": 2,
+        "decomp": { "*": [ "goto what" ] }
+      },
+      {
         "word": "i",
         "weight": 1,
         "decomp": {
           "i @desire *": [
             "What makes you want (2)?",
             "Do you really (1) (2)?",
+          ]
+        }
+      },
+      {
+        "word": "my",
+        "weight": 3,
+        "decomp": {
+          "$ * my *": [
+            "Earlier you mentioned your (2)"
           ]
         }
       },
@@ -97,6 +116,22 @@ describe("Eliza", function() { with(this) {
       eliza.say("I desire a bushel of lolcats");
 
       expect(client.say).toHaveBeenCalledWith("Do you really desire a bushel of lolcats?");
+    }})
+
+    it("Stores responses from $ decomps for later", function() { with(this) {
+      eliza.say("Do you know my name?");
+
+      expect(client.say).toHaveBeenCalledWith("I don't like names");
+
+      eliza.say("this contains no keywords");
+
+      expect(client.say).toHaveBeenCalledWith("Earlier you mentioned your name?");
+    }})
+
+    it("follows goto phrases", function() { with(this) {
+      eliza.say("why is that?");
+
+      expect(client.say).toHaveBeenCalledWith("Does that question interest you?");
     }})
 
     it("Uses a default phrase if no matches are found", function() { with(this) {

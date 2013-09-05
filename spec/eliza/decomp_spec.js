@@ -1,4 +1,6 @@
-var Decomp = require('../../lib/eliza/decomp');
+var imports      = require('../../lib/eliza/decomp');
+var Decomp       = imports.Decomp;
+var StoredDecomp = imports.StoredDecomp;
 
 describe("Decomp", function() { with(this) {
   var regex   = /hello i'm (.*)/,
@@ -23,7 +25,7 @@ describe("Decomp", function() { with(this) {
       it("delegates to the next decomp if one is present", function() { with(this) {
         var next_decomp = { match: function(p,r) { } };
         spyOn(next_decomp, 'match');
-        decomp.setNext(next_decomp);
+        decomp.next = next_decomp;
 
         decomp.match("this doesn't match", responder);
 
@@ -38,10 +40,28 @@ describe("Decomp", function() { with(this) {
         expect(responder.respondWith).toHaveBeenCalledWith("hello simon");
       }})
 
+      it("calls gotoKey() if the response is a goto", function() { with(this) {
+        var regex       = /hello/;
+        var phrases     = ["goto greet"];
+        var goto_decomp = new Decomp(regex, phrases);
+
+        goto_decomp.match("hello", responder);
+
+        expect(responder.gotoKey).toHaveBeenCalledWith("greet");
+      }})
+
+      it("calls storeResponse() if the decomp is a StoredDecomp", function() { with(this) {
+        var stored_decomp = new StoredDecomp(regex, phrases);
+
+        stored_decomp.match("hello i'm simon", responder);
+
+        expect(responder.storeResponse).toHaveBeenCalledWith("hello simon");
+      }})
+
       it("does not delegate to the next decomp", function() { with(this) {
         var next_decomp = { match: function(p,r) { } };
         spyOn(next_decomp, 'match');
-        decomp.setNext(next_decomp);
+        decomp.next = next_decomp;
 
         decomp.match("hello i'm simon", responder);
 
