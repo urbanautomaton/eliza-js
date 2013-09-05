@@ -1,0 +1,26 @@
+title Eliza
+
+client->+Eliza: new(script, self)
+Eliza-->-client: say("hello")
+client->Eliza: say(input)
+Eliza->+Responder: respondTo(input)
+Responder->Responder: preFilter(input)
+loop foreach key until response
+    Responder->key: match(input, self)
+    loop foreach decomp until matched?
+        key->+decomp: match(input, responder)
+        alt store
+            decomp->Responder: store(response)
+        else goto
+            decomp->Responder: goto(key)
+        else response
+            decomp->Responder: respondWith(response)
+        end
+        opt matched?
+            decomp-->-key: matched
+        end
+    end
+end
+Responder->Responder: postFilter(response)
+Responder-->-Eliza: response
+Eliza->client: say(response)
