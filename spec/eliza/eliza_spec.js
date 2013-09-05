@@ -40,9 +40,11 @@ describe("Eliza", function() { with(this) {
 
     it("cycles through matched phrases", function() { with(this) {
       eliza.say("I don't like ham");
-      eliza.say("I don't like trout");
 
       expect(client.say).toHaveBeenCalledWith("Why do you not like ham?");
+
+      eliza.say("I don't like trout");
+
       expect(client.say).toHaveBeenCalledWith("You are so negative about trout");
     }})
 
