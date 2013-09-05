@@ -44,9 +44,11 @@ describe("Eliza", function() { with(this) {
 
   beforeEach(function() {
     this.client = {
-      say: function(phrase) { }
+      say: function(phrase) { },
+      quit: function() { }
     };
     spyOn(this.client, 'say');
+    spyOn(this.client, 'quit');
 
     this.eliza = new Eliza(this.client, script);
   })
@@ -107,7 +109,7 @@ describe("Eliza", function() { with(this) {
       eliza.say("quit");
 
       expect(client.say).toHaveBeenCalledWith("Fine, go.");
-      expect(eliza.isFinished()).toEqual(true);
+      expect(client.quit).toHaveBeenCalled();
     }})
   }})
 
