@@ -68,7 +68,7 @@ describe("Eliza", function() { with(this) {
 
       eliza.say("this contains no keywords");
 
-      expect(client.say).toHaveBeenCalledWith("Earlier you mentioned your name?");
+      expect(client.say).toHaveBeenCalledWith("Earlier you mentioned your name");
     }})
 
     it("follows goto phrases", function() { with(this) {
