@@ -8,8 +8,7 @@ describe("Responder", function() { with(this) {
     this.client = { say: function() {} };
     spyOn(this.client, 'say');
 
-    this.pre  = { };
-    this.post = { };
+    this.pre  = function(p) { return p };
 
     this.key1 = { match: function(p,r) {} };
     this.key2 = { match: function(p,r) { r.respondWith("hello"); } };
@@ -19,12 +18,12 @@ describe("Responder", function() { with(this) {
     spyOn(this.key2, "match").andCallThrough();
     spyOn(this.key3, "match").andCallThrough();
 
-    var key_hash = new OrderedHash();
-    key_hash.push("a", this.key1);
-    key_hash.push("b", this.key2);
-    key_hash.push("c", this.key3);
+    this.key_hash = new OrderedHash();
+    this.key_hash.push("a", this.key1);
+    this.key_hash.push("b", this.key2);
+    this.key_hash.push("c", this.key3);
 
-    this.responder = new Responder(this.pre, this.post, key_hash, defaults);
+    this.responder = new Responder(this.pre, this.key_hash, defaults);
   })
 
   describe(".respond()", function() { with(this) {
@@ -75,20 +74,14 @@ describe("Responder", function() { with(this) {
     }})
 
     it("performs pre-substitutions on the input phrase", function() { with(this) {
-      pre["dont"] = "don't";
+      pre = function(p) { return p.replace("dont", "don't"); };
+      pre_responder = new Responder(this.pre, this.key_hash, defaults);
 
-      responder.respondTo("dont do that", client);
+      pre_responder.respondTo("dont do that", client);
 
-      expect(key1.match).toHaveBeenCalledWith("don't do that", responder);
+      expect(key1.match).toHaveBeenCalledWith("don't do that", pre_responder);
     }})
 
-    it("performs post-substitutions on the received response", function() { with(this) {
-      post["hello"] = "goodbye";
-
-      responder.respondTo("dont do that", client);
-
-      expect(client.say).toHaveBeenCalledWith("goodbye");
-    }})
   }})
 
 }})

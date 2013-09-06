@@ -13,11 +13,13 @@ describe("Decomp", function() { with(this) {
       storeResponse:  function(phrase) { }
     };
 
+    this.post = function(p) { return p; };
+
     spyOn(this.responder, 'respondWith');
     spyOn(this.responder, 'gotoKey');
     spyOn(this.responder, 'storeResponse');
 
-    this.decomp = new Decomp(regex, phrases);
+    this.decomp = new Decomp(regex, phrases, this.post);
   })
 
   describe("match()", function() { with(this) {
@@ -51,7 +53,7 @@ describe("Decomp", function() { with(this) {
       }})
 
       it("calls storeResponse() if the decomp is a StoredDecomp", function() { with(this) {
-        var stored_decomp = new StoredDecomp(regex, phrases);
+        var stored_decomp = new StoredDecomp(regex, phrases, this.post);
 
         stored_decomp.match("hello i'm simon", responder);
 

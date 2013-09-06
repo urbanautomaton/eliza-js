@@ -48,6 +48,12 @@ describe("Eliza", function() { with(this) {
       expect(client.say).toHaveBeenCalledWith("You are so negative about trout");
     }})
 
+    it("post-filters match blocks", function() { with(this) {
+      eliza.say("I don't like your face");
+
+      expect(client.say).toHaveBeenCalledWith("Why do you not like my face?");
+    }})
+
     it("recognises synonyms", function() { with(this) {
       eliza.say("I need a loaf of bread");
 
