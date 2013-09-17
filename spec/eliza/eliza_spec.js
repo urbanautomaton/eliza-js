@@ -1,4 +1,4 @@
-var Eliza = require('../../lib/eliza/eliza');
+var Eliza  = require('../../lib/eliza/eliza');
 var script = require('../fixtures/script');
 
 describe("Eliza", function() { with(this) {
@@ -48,6 +48,12 @@ describe("Eliza", function() { with(this) {
       expect(client.say).toHaveBeenCalledWith("You are so negative about trout");
     }})
 
+    it("pre-filters input sentences", function() { with(this) {
+      eliza.say("I dont like ham");
+
+      expect(client.say).toHaveBeenCalledWith("Why do you not like ham?");
+    }})
+
     it("post-filters match blocks", function() { with(this) {
       eliza.say("I don't like your face");
 
@@ -55,9 +61,9 @@ describe("Eliza", function() { with(this) {
     }})
 
     it("recognises synonyms", function() { with(this) {
-      eliza.say("I need a loaf of bread");
+      eliza.say("I want your face");
 
-      expect(client.say).toHaveBeenCalledWith("What makes you want a loaf of bread?");
+      expect(client.say).toHaveBeenCalledWith("What makes you want my face?");
     }})
 
     it("substitutes synonyms as match blocks", function() { with(this) {

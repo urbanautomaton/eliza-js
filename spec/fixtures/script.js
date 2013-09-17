@@ -3,7 +3,7 @@ var script = {
   "final":    "Fine, go.",
   "quit":     ["quit"],
   "pre":      { "dont": "don't" },
-  "post":     { "your": "my" },
+  "post":     { "your": "my", "my": "your" },
   "synon":    { "desire": ["want", "need"] },
   "keys":     [
     {
