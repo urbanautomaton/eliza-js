@@ -1,0 +1,22 @@
+{
+  "name": "eliza",
+  "version": "0.0.1",
+  "author": "Simon Coffey <simon@NOSPAMurbanautomaton.com>",
+  "description": "A javascript implmentation of ELIZA",
+  "scripts": {
+    "test": "jasmine-node spec"
+  },
+  "main": "lib/eliza/eliza.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urbanautomaton/eliza-js.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine-node": "1.11.x"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10"
+  }
+}
